@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeMaster | Next-Gen Steel & Welding Architecture</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- RESET & DESIGN SYSTEM --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        :root {
+            --primary-spark: #ff5500;
+            --steel-blue: #00e5ff;
+            --dark-industrial: #0a0d10;
+            --panel-bg: rgba(20, 26, 33, 0.65);
+            --text-main: #f0f3f5;
+        }
+        body {
+            background-color: var(--dark-industrial);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- THREE.JS BACKGROUND CANVAS --- */
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .logo {
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+        .logo span { color: var(--primary-spark); }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--steel-blue); }
+
+        /* --- SECTIONS --- */
+        section {
+            min-height: 100vh;
+            padding: 120px 8%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            height: 100vh;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            max-width: 900px;
+        }
+        .hero-title span {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-main);
+        }
+        .hero-title em {
+            font-style: normal;
+            color: var(--primary-spark);
+        }
+        .hero-tagline {
+            font-size: 1.2rem;
+            max-width: 550px;
+            color: #8a99a8;
+            margin-bottom: 40px;
+        }
+        .cta-btn {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--primary-spark), #ff8800);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(255, 85, 0, 0.3);
+        }
+
+        /* --- SERVICES (GSAP TRIGGER CARDS) --- */
+        .section-header {
+            margin-bottom: 60px;
+        }
+        .section-header h2 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2.5rem;
+            color: var(--steel-blue);
+        }
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .service-panel {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        .service-panel i {
+            font-size: 2.5rem;
+            color: var(--primary-spark);
+            margin-bottom: 25px;
+        }
+        .service-panel h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+        .service-panel p {
+            color: #8a99a8;
+            line-height: 1.6;
+        }
+
+        /* --- WORK / GALLERY --- */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        .work-box {
+            position: relative;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .work-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(40%) contrast(110%);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .work-box:hover img {
+            transform: scale(1.08);
+        }
+        .work-meta {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(10, 13, 16, 0.95));
+            z-index: 2;
+        }
+
+        /* --- CONTACT BLOCK --- */
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            background: var(--panel-bg);
+            border-radius: 12px;
+            padding: 60px;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 4px;
+            outline: none;
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: var(--steel-blue);
+        }
+
+        @media (max-width: 768px) {
+            .contact-wrap { grid-template-columns: 1fr; padding: 30px; }
+            nav .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="webgl-canvas"></canvas>
+
+    <nav>
+        <div class="logo">FORGE<span>X</span></div>
+        <ul class="nav-links">
+            <li><a href="#hero">Core</a></li>
+            <li><a href="#services">Capabilities</a></li>
+            <li><a href="#work">Portfolio</a></li>
+            <li><a href="#contact">Consultation</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <h1 class="hero-title">Precision <span>Heavy-Duty</span> Grill Gates & <em>Steel Fabrication</em></h1>
+        <p class="hero-tagline">Engineered structures matching architectural brilliance with industrial strength durability.</p>
+        <button class="cta-btn">Initialize Project</button>
+    </section>
+
+    <section id="services">
+        <div class="section-header">
+            <h2>Industrial Scope</h2>
+        </div>
+        <div class="services-container">
+            <div class="service-panel">
+                <i class="fa-solid fa-sheet-plastic"></i>
+                <h3>Architectural Grill Gates</h3>
+                <p>Custom laser-cut CNC metal gates, automated sliding safety entries, and structural security frameworks.</p>
+            </div>
+            <div class="service-panel">
+                <i class="fa-solid fa-fire-burner"></i>
+                <h3>Arc & Argon Welding</h3>
+                <p>High-integrity TIG/MIG welding operations designed to sustain extreme pressure, stress, and weight requirements.</p>
+            </div>
+            <div class="service-panel">
+                <i class="fa-solid fa-warehouse"></i>
+                <h3>Structural Steelworks</h3>
+                <p>Industrial warehousing framing, structural columns, custom iron stairs, and heavy structural reinforcements.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="work">
+        <div class="section-header">
+            <h2>Executed Operations</h2>
+        </div>
+        <div class="work-grid">
+            <div class="work-box">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800" alt="Steel Gate">
+                <div class="work-meta">
+                    <h3>High-Security Modern Gate</h3>
+                </div>
+            </div>
+            <div class="work-box">
+                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&q=80&w=800" alt="Welding">
+                <div class="work-meta">
+                    <h3>TIG Precision Fusion</h3>
+                </div>
+            </div>
+            <div class="work-box">
+                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800" alt="Steel Stairs">
+                <div class="work-meta">
+                    <h3>Commercial Steel Framework</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-wrap">
+            <div>
+                <h2 style="font-family:'Syncopate'; font-size:2rem; margin-bottom:20px; color:var(--primary-spark);">Let's Forge Together</h2>
+                <p style="color:#8a99a8; line-height:1.7;">Submit your blueprints, AutoCAD files, or dimension parameters. Our engineers will reply with a detailed material quote.</p>
+            </div>
+            <form>
+                <div class="input-group"><input type="text" placeholder="Authorized Name" required></div>
+                <div class="input-group"><input type="email" placeholder="Communication Email" required></div>
+                <div class="input-group"><textarea rows="4" placeholder="Project Structural Specifications..." required></textarea></div>
+                <button class="cta-btn" type="submit" style="width: 100%;">Transmit Parameters</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        // Make sure GSAP registers the ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+
+        // ==========================================
+        // 1. THREE.JS 3D SPARK SIMULATION BACKGROUND
+        // ==========================================
+        const canvas = document.querySelector('#webgl-canvas');
+        const scene = new THREE.Scene();
+        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Create random geometric field particles (Welding Sparks)
+        const particlesCount = 400;
+        const positions = new Float32Array(particlesCount * 3);
+        
+        for(let i=0; i < particlesCount * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 12; // Spread particles
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        // Material config for glowing welding sparks
+        const material = new THREE.PointsMaterial({
+            size: 0.035,
+            color: 0xff6a00, 
+            transparent: true,
+            opacity: 0.7,
+            blending: THREE.AdditiveBlending
+        });
+
+        const particleMesh = new THREE.Points(geometry, material);
+        scene.add(particleMesh);
+
+        // Render loop animation + subtle mouse reactive shift
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
+
+        const clock = new THREE.Clock();
+
+        function animate3D() {
+            const elapsedTime = clock.getElapsedTime();
+            
+            // Continuous rotational movement simulating wind/heat drift
+            particleMesh.rotation.y = elapsedTime * 0.05;
+            particleMesh.rotation.x = elapsedTime * 0.02;
+
+            // Interactive parallax mouse logic
+            particleMesh.position.x += (mouseX * 0.5 - particleMesh.position.x) * 0.1;
+            particleMesh.position.y += (-mouseY * 0.5 - particleMesh.position.y) * 0.1;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate3D);
+        }
+        animate3D();
+
+        // Responsive window handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+
+        // ==========================================
+        // 2. GSAP SCROLL & LAYERED INTERACTION ENGINE
+        // ==========================================
+        
+        // Hero Section Typography entry timeline
+        const tlHero = gsap.timeline();
+        tlHero.from('.hero-title', { opacity: 0, y: 80, duration: 1.2, ease: "power4.out" })
+              .from('.hero-tagline', { opacity: 0, y: 30, duration: 0.8, ease: "power3.out" }, "-=0.6")
+              .from('.cta-btn', { opacity: 0, scale: 0.9, duration: 0.6, ease: "back.out(1.7)" }, "-=0.4");
+
+        // Staggered ScrollTrigger reveal for Service Panels
+        gsap.from(".service-panel", {
+            scrollTrigger: {
+                trigger: "#services",
+                start: "top 70%", // Triggers animation when section hits 70% height of screen
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 100,
+            stagger: 0.25, // Stagger delays loading between subsequent elements
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        // Split slide visual element trigger for Work Portfolio items
+        gsap.from(".work-box", {
+            scrollTrigger: {
+                trigger: "#work",
+                start: "top 75%"
+            },
+            opacity: 0,
+            scale: 0.85,
+            y: 50,
+            stagger: 0.2,
+            duration: 1.2,
+            ease: "elastic.out(1, 0.75)"
+        });
+
+        // Contact Section Wrapper panel slide reveal
+        gsap.from(".contact-wrap", {
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top 80%"
+            },
+            opacity: 0,
+            y: 60,
+            duration: 1.5,
+            ease: "power4.out"
+        });
+    </script>
+</body>
+</html>

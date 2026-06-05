@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>METALURG | Premium Iron & Steel Fabrication</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #FEFEFE;
+      color: #1E1E1E;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Header Premium */
+    .header {
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #1E1E1E;
+    }
+    .logo span { color: #C67B2E; }
+    .nav {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #4A4A4A;
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: #C67B2E; }
+    .nav .btn-nav {
+      background: #C67B2E;
+      color: white !important;
+      padding: 10px 28px;
+      border-radius: 40px;
+    }
+    .nav .btn-nav:hover { background: #A8621A; }
+    .mobile-btn {
+      display: none;
+      font-size: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    @media (max-width: 900px) {
+      .nav {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 70px);
+        background: white;
+        flex-direction: column;
+        padding: 40px;
+        box-shadow: 5px 0 30px rgba(0,0,0,0.1);
+        transition: 0.3s;
+        gap: 25px;
+        align-items: flex-start;
+      }
+      .nav.active {
+        left: 0;
+      }
+      .mobile-btn {
+        display: block;
+      }
+      .container { padding: 0 24px; }
+      .header-inner { padding: 16px 24px; }
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      background: linear-gradient(135deg, #FDF9F4 0%, #FFFFFF 100%);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-label {
+      display: inline-block;
+      background: #F0E6D8;
+      color: #C67B2E;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+      color: #1E1E1E;
+    }
+    .hero h1 span { color: #C67B2E; }
+    .hero p {
+      font-size: 17px;
+      color: #5A5A5A;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #C67B2E;
+      color: white;
+      padding: 14px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .btn-primary:hover {
+      background: #A8621A;
+      transform: translateY(-2px);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 48px;
+    }
+    .stat h3 {
+      font-size: 32px;
+      font-weight: 800;
+      color: #C67B2E;
+    }
+    .hero-img img {
+      width: 100%;
+      border-radius: 24px;
+      height: 480px;
+      object-fit: cover;
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.15);
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 42px; }
+    }
+
+    /* Section Header */
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-tag {
+      color: #C67B2E;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: #1E1E1E;
+    }
+    .section-header h2 span { color: #C67B2E; }
+
+    /* Services */
+    .services { padding: 80px 0; background: white; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+    .service-card {
+      background: #FFFFFF;
+      border: 1px solid #EAEAEA;
+      border-radius: 20px;
+      padding: 32px 24px;
+      transition: all 0.3s;
+    }
+    .service-card:hover {
+      border-color: #C67B2E;
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.08);
+    }
+    .service-icon {
+      font-size: 44px;
+      color: #C67B2E;
+      margin-bottom: 20px;
+    }
+    .service-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .service-card p {
+      color: #6B6B6B;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .service-badge {
+      display: inline-block;
+      margin-top: 16px;
+      background: #F5EFE8;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #C67B2E;
+    }
+    @media (max-width: 1100px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Gallery - Facebook Style Grid */
+    .gallery-section {
+      padding: 80px 0;
+      background: #FBF9F7;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+    .gallery-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #EEEEEE;
+      transition: 0.3s;
+    }
+    .gallery-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+      border-color: #C67B2E;
+    }
+    .gallery-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-info {
+      padding: 20px;
+    }
+    .gallery-info h4 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .gallery-ba {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #F0F0F0;
+      font-size: 12px;
+      color: #888;
+    }
+    .gallery-ba i {
+      color: #C67B2E;
+      margin-right: 5px;
+    }
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+
+    /* About */
+    .about-section {
+      padding: 80px 0;
+      background: white;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-img img {
+      width: 100%;
+      border-radius: 24px;
+      height: 420px;
+      object-fit: cover;
+    }
+    .about-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .about-content p {
+      color: #5A5A5A;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .features span {
+      background: #F5EFE8;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    @media (max-width: 800px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 80px 0;
+      background: #FBF9F7;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .testimonial-card {
+      background: white;
+      padding: 32px;
+      border-radius: 20px;
+      border: 1px solid #EAEAEA;
+    }
+    .testimonial-card i {
+      font-size: 34px;
+      color: #C67B2E;
+      opacity: 0.5;
+      margin-bottom: 16px;
+    }
+    .testimonial-card p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #4A4A4A;
+      margin-bottom: 20px;
+    }
+    .stars {
+      color: #C67B2E;
+      margin-bottom: 12px;
+      letter-spacing: 3px;
+    }
+    @media (max-width: 900px) {
+      .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .testimonial-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Contact */
+    .contact-section {
+      padding: 80px 0;
+      background: white;
+    }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      background: #FBF9F7;
+      padding: 50px;
+      border-radius: 30px;
+    }
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .contact-detail i {
+      width: 44px;
+      height: 44px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #C67B2E;
+      font-size: 18px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid #E0E0E0;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 14px;
+      background: white;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #C67B2E;
+    }
+    .btn-submit {
+      width: 100%;
+      background: #C67B2E;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    @media (max-width: 800px) {
+      .contact-wrapper { grid-template-columns: 1fr; padding: 30px; }
+    }
+
+    /* Footer */
+    .footer {
+      background: #1A1A1A;
+      color: #AAAAAA;
+      text-align: center;
+      padding: 40px;
+      font-size: 13px;
+    }
+    .footer i {
+      margin: 0 10px;
+      font-size: 18px;
+      color: #C67B2E;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">METAL<span>URG</span></div>
+    <button class="mobile-btn" id="mobileBtn"><i class="fas fa-bars"></i></button>
+    <div class="nav" id="navMenu">
+      <a href="#home">HOME</a>
+      <a href="#services">SERVICES</a>
+      <a href="#gallery">PORTFOLIO</a>
+      <a href="#about">STUDIO</a>
+      <a href="#testimonials">REVIEWS</a>
+      <a href="#contact" class="btn-nav">GET QUOTE</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-label"><i class="fas fa-fire"></i> SINCE 2012 · MASTER FABRICATORS</div>
+          <h1>Strong, Secure & <span>Stylish</span><br>Metal Works</h1>
+          <p>Premium iron and steel fabrication combining structural integrity with timeless design. Custom gates, staircases, railings, and bespoke metalwork.</p>
+          <a href="#contact" class="btn-primary"><i class="fas fa-file-invoice"></i> FREE QUOTE</a>
+          <div class="hero-stats">
+            <div class="stat"><h3>780+</h3><p>Projects</p></div>
+            <div class="stat"><h3>100%</h3><p>Custom</p></div>
+            <div class="stat"><h3>12 YRS</h3><p>Expertise</p></div>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img src="https://images.unsplash.com/photo-1581092335871-5d9b5a3eb1c3?w=700&h=480&fit=crop" alt="Metal Fabrication">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">OUR CRAFT</div>
+        <h2>Premium <span>Metal Solutions</span></h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card"><div class="service-icon"><i class="fas fa-door-open"></i></div><h3>Iron Doors & Security Gates</h3><p>Armored elegance with multi-point locking systems.</p><div class="service-badge">Fortress + Design</div></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-gripfire"></i></div><h3>Decorative Iron Grills</h3><p>Laser-cut patterns and classic scrollwork.</p><div class="service-badge">Artistic Security</div></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-archive"></i></div><h3>Rolling Shutters</h3><p>Heavy-gauge steel, motorized options.</p><div class="service-badge">Industrial Grade</div></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-arrows-spin"></i></div><h3>Collapsible Gates</h3><p>Space-saving scissor mechanism.</p><div class="service-badge">Smart Space</div></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-bed"></i></div><h3>Steel Beds & Furniture</h3><p>Modern industrial design, powder-coated finish.</p><div class="service-badge">Durable Luxury</div></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-hand-peace"></i></div><h3>Railings (Balcony & Window)</h3><p>Glass + iron combos, safety compliant.</p><div class="service-badge">Safe & Chic</div></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-stairs"></i></div><h3>Custom Staircases</h3><p>Floating, spiral, helical masterpieces.</p><div class="service-badge">Architectural Art</div></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-fire-extinguisher"></i></div><h3>Bespoke Fabrication</h3><p>Pergolas, fire pits, any custom work.</p><div class="service-badge">Tailor-Made</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section - Facebook Style Grid -->
+  <section id="gallery" class="gallery-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">VISUAL PORTFOLIO</div>
+        <h2>Recent <span>Masterpieces</span></h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-card"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=500&h=260&fit=crop" alt="Custom Gate"><div class="gallery-info"><h4>Modern Estate Gate</h4><div class="gallery-ba"><span><i class="fas fa-eye"></i> Before: Raw Steel</span><span><i class="fas fa-gem"></i> After: Bronze Finish</span></div></div></div>
+        <div class="gallery-card"><img src="https://images.unsplash.com/photo-1563180636-520edd8a95a5?w=500&h=260&fit=crop" alt="Staircase"><div class="gallery-info"><h4>Floating Helical Stair</h4><div class="gallery-ba"><span><i class="fas fa-chalkboard"></i> Raw Frame</span><span><i class="fas fa-crown"></i> Walnut + Steel</span></div></div></div>
+        <div class="gallery-card"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=260&fit=crop" alt="Window Grill"><div class="gallery-info"><h4>Art Deco Window Grill</h4><div class="gallery-ba"><span>Standard Bars</span><span>Laser-Cut Elegance</span></div></div></div>
+        <div class="gallery-card"><img src="https://images.unsplash.com/photo-1581092335871-5d9b5a3eb1c3?w=500&h=260&fit=crop" alt="Rolling Shutter"><div class="gallery-info"><h4>Smart Rolling Shutter</h4><div class="gallery-ba"><span>Manual Operation</span><span>Motorized + Remote</span></div></div></div>
+        <div class="gallery-card"><img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500&h=260&fit=crop" alt="Steel Bed"><div class="gallery-info"><h4>Minimalist Steel Bed</h4><div class="gallery-ba"><span>Basic Frame</span><span>Matte Black + Leather</span></div></div></div>
+        <div class="gallery-card"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=500&h=260&fit=crop" alt="Glass Railing"><div class="gallery-info"><h4>Infinity Glass Railing</h4><div class="gallery-ba"><span>Old Pipe Rail</span><span>Cable + Tempered Glass</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img"><img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&h=420&fit=crop" alt="Welding Artisan"></div>
+        <div class="about-content">
+          <div class="section-tag" style="text-align:left;">OUR PHILOSOPHY</div>
+          <h3>Where <span style="color:#C67B2E;">Metal</span> Becomes Art</h3>
+          <p>We are certified welders, designers, and artisans dedicated to creating ironworks that last generations. Every project is custom-designed, meticulously fabricated, and finished with precision.</p>
+          <div class="features">
+            <span><i class="fas fa-check"></i> 100% Custom</span>
+            <span><i class="fas fa-certificate"></i> Certified Welders</span>
+            <span><i class="fas fa-shield-alt"></i> Lifetime Warranty</span>
+            <span><i class="fas fa-pen-ruler"></i> Free Consultation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">CLIENT LOVE</div>
+        <h2>What <span>Our Clients</span> Say</h2>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card"><i class="fas fa-quote-left"></i><p>"The custom staircase is breathtaking. Every detail is perfect. Professional team from start to finish."</p><div class="stars">★★★★★</div><strong>— Olivia Chen</strong></div>
+        <div class="testimonial-card"><i class="fas fa-quote-left"></i><p>"Our security gates and railings exceeded expectations. Beautiful design, solid construction. Highly recommend!"</p><div class="stars">★★★★★</div><strong>— Marcus Williams</strong></div>
+        <div class="testimonial-card"><i class="fas fa-quote-left"></i><p>"SteelCraft delivered premium quality on time. The rolling shutters and iron grills are exceptional."</p><div class="stars">★★★★★</div><strong>— Sarah Johnson</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <div class="section-tag" style="text-align:left;">GET IN TOUCH</div>
+          <h3>Request a <span style="color:#C67B2E;">Free Quote</span></h3>
+          <p>Tell us about your project. We'll respond within 24 hours.</p>
+          <div class="contact-detail"><i class="fas fa-phone-alt"></i><div><strong>Phone</strong><br>+1 (888) 789-4567</div></div>
+          <div class="contact-detail"><i class="fas fa-envelope"></i><div><strong>Email</strong><br>studio@metalurg.com</div></div>
+          <div class="contact-detail"><i class="fas fa-map-marker-alt"></i><div><strong>Workshop</strong><br>842 Metal District, Austin, TX</div></div>
+        </div>
+        <div>
+          <form id="quoteForm">
+            <div class="form-group"><input type="text" placeholder="Full Name" required></div>
+            <div class="form-group"><input type="email" placeholder="Email Address" required></div>
+            <div class="form-group"><input type="tel" placeholder="Phone Number"></div>
+            <div class="form-group"><select><option>Select Service</option><option>Iron Doors / Gates</option><option>Staircases & Railings</option><option>Rolling Shutters</option><option>Custom Fabrication</option></select></div>
+            <div class="form-group"><textarea rows="3" placeholder="Tell us about your project..."></textarea></div>
+            <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> SEND REQUEST</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2025 METALURG — Precision Welding & Bespoke Ironwork. Strength & Beauty Since 2012.</p>
+  <div style="margin-top: 12px;">
+    <i class="fab fa-instagram"></i> <i class="fab fa-facebook-f"></i> <i class="fab fa-pinterest"></i> <i class="fab fa-linkedin-in"></i>
+  </div>
+</footer>
+
+<script>
+  const mobileBtn = document.getElementById('mobileBtn');
+  const navMenu = document.getElementById('navMenu');
+  if (mobileBtn) {
+    mobileBtn.addEventListener('click', () => navMenu.classList.toggle('active'));
+  }
+  document.querySelectorAll('.nav a').forEach(link => {
+    link.addEventListener('click', () => navMenu.classList.remove('active'));
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+  const form = document.getElementById('quoteForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('✓ Thank you! Your quote request has been received. We will contact you within 24 hours.');
+      form.reset();
+    });
+  }
+</script>
+</body>
+</html>
